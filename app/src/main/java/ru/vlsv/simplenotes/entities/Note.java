@@ -14,14 +14,31 @@ public class Note implements Parcelable {
 
     private String noteText;
 
-    private final LocalDateTime noteCreateDate;
+//    private LocalDateTime noteCreateDate;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Note(String noteName, String noteText) {
         this.noteName = noteName;
         this.noteText = noteText;
-        noteCreateDate = LocalDateTime.now();
+//        noteCreateDate = LocalDateTime.now();
     }
+
+    protected Note(Parcel in) {
+        noteName = in.readString();
+        noteText = in.readString();
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     public String getNoteName() {
         return noteName;
@@ -39,9 +56,9 @@ public class Note implements Parcelable {
         this.noteText = noteText;
     }
 
-    public LocalDateTime getNoteCreateDate() {
-        return noteCreateDate;
-    }
+//    public LocalDateTime getNoteCreateDate() {
+//        return noteCreateDate;
+//    }
 
     @Override
     public int describeContents() {
@@ -49,7 +66,8 @@ public class Note implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(noteName);
+        dest.writeString(noteText);
     }
 }
