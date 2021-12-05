@@ -28,7 +28,7 @@ public class NoteTextActivity extends AppCompatActivity {
                 Note note = getIntent().getParcelableExtra(EXTRA_NOTE);
 
                 fm.beginTransaction()
-                        .replace(R.id.notes_text_container_activity, NoteTextFragment.newInstance(note))
+                        .replace(R.id.container, NoteTextFragment.newInstance(note))
                         .commit();
             }
 

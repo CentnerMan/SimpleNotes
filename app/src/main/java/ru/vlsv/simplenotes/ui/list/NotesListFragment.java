@@ -20,27 +20,22 @@ import ru.vlsv.simplenotes.entities.Note;
 public class NotesListFragment extends Fragment implements NotesListView {
 
     public static final String ARG_NOTE = "ARG_NOTE";
-    public static final String RESULT_KEY = "NoteListFragment_RESULT";
+    public static final String RESULT_KEY = "NotesListFragment_RESULT";
 
     private LinearLayout notesContainer;
 
     private NotesListPresenter presenter;
 
-    public NotesListFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         presenter = new NotesListPresenter(this, new InMemoryNotesRepository());
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_notes_list, container, false);
     }
 
@@ -48,13 +43,14 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        notesContainer = view.findViewById(R.id.notes_list_container);
+        notesContainer = view.findViewById(R.id.notes_container);
 
         presenter.refresh();
     }
 
     @Override
     public void showNotes(List<Note> notes) {
+
         for (Note note : notes) {
 
             View itemView = LayoutInflater.from(requireContext()).inflate(R.layout.item_notes, notesContainer, false);

@@ -7,17 +7,19 @@ import ru.vlsv.simplenotes.entities.NotesRepository;
 
 public class NotesListPresenter {
 
-    private NotesListView listView;
+    private NotesListView view;
 
     private NotesRepository repository;
 
-    public NotesListPresenter(NotesListView listView, NotesRepository repository) {
-        this.listView = listView;
+    public NotesListPresenter(NotesListView view, NotesRepository repository) {
+        this.view = view;
         this.repository = repository;
     }
 
     public void refresh() {
+
         List<Note> result = repository.getAllNotes();
-        listView.showNotes(result);
+
+        view.showNotes(result);
     }
 }

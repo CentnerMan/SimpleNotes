@@ -1,12 +1,12 @@
 package ru.vlsv.simplenotes.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentResultListener;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentResultListener;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
@@ -43,7 +43,7 @@ public class NotesActivity extends AppCompatActivity {
                             showDetails();
                         } else {
                             Intent intent = new Intent(NotesActivity.this, NoteTextActivity.class);
-                            intent.putExtra(NotesListFragment.ARG_NOTE, selectedNote);
+                            intent.putExtra(NoteTextActivity.EXTRA_NOTE, selectedNote);
                             startActivity(intent);
                         }
                     }
@@ -63,6 +63,7 @@ public class NotesActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(NoteTextFragment.ARG_NOTE, selectedNote);
         getSupportFragmentManager()
-                .setFragmentResult(NoteTextFragment.RESULT_KEY, bundle);
+                .setFragmentResult(NoteTextFragment.KEY_RESULT, bundle);
     }
+
 }
