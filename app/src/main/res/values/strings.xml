@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Simple Notes</string>
+
+    <string name="notes_list">List Notes</string>
+    <string name="notes_name">Notes name</string>
+    <string name="notes_text">Super-Puper text</string>
+    <string name="content_descr_float_add">add</string>
+    <string name="first_note_name">Первая заметка</string>
+    <string name="first_note_text">Текст первой заметки</string>
+    <string name="second_note_name">Вторая заметка</string>
+    <string name="second_note_text">Текст второй заметки</string>
+
 </resources>
