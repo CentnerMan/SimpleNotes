@@ -14,5 +14,7 @@
     <string name="notes_text_background_color_name">Цвет фона</string>
     <string name="preferences_ok_btn">Подтвердить изменения</string>
     <string name="preferences_cancel_btn">Отменить изменения</string>
+    <string name="action_add">add</string>
+    <string name="action_delete">Delete</string>
 
 </resources>

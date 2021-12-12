@@ -1,8 +1,12 @@
 package ru.vlsv.simplenotes.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,4 +70,22 @@ public class NotesActivity extends AppCompatActivity {
                 .setFragmentResult(NoteTextFragment.KEY_RESULT, bundle);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_add:
+                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_delete:
+                Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
