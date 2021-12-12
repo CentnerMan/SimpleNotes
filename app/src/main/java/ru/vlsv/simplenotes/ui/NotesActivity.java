@@ -80,10 +80,10 @@ public class NotesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_add:
-                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_delete:
-                Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

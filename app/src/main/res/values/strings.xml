@@ -4,7 +4,7 @@
     <string name="notes_list">List Notes</string>
     <string name="notes_name">Notes name</string>
     <string name="notes_text">Super-Puper text</string>
-    <string name="content_descr_float_add">add</string>
+    <string name="content_descr_float_add">Add</string>
     <string name="first_note_name">Первая заметка</string>
     <string name="first_note_text">Текст первой заметки</string>
     <string name="second_note_name">Вторая заметка</string>
@@ -14,7 +14,11 @@
     <string name="notes_text_background_color_name">Цвет фона</string>
     <string name="preferences_ok_btn">Подтвердить изменения</string>
     <string name="preferences_cancel_btn">Отменить изменения</string>
-    <string name="action_add">add</string>
+    <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
+    <string name="action_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

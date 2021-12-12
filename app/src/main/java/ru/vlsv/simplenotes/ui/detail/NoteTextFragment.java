@@ -74,7 +74,7 @@ public class NoteTextFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
