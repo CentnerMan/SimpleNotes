@@ -17,8 +17,13 @@
     <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
     <string name="action_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exit">Exit</string>
+    <string name="about">About</string>
+    <string name="drawer_header">Simple Notes</string>
+    <string name="navigation_drawer_open">open drawer</string>
+    <string name="navigation_drawer_close">close drawer</string>
+    <string name="about_developers">About developers</string>
+    <string name="preferences">Preferences</string>
 
 
 </resources>

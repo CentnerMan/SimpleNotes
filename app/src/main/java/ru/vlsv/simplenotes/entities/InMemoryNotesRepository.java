@@ -7,9 +7,7 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.vlsv.simplenotes.R;
-
-public class InMemoryNotesRepository implements NotesRepository{
+public class InMemoryNotesRepository implements NotesRepository {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

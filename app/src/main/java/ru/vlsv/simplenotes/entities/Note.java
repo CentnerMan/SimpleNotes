@@ -6,8 +6,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
-import java.time.LocalDateTime;
-
 public class Note implements Parcelable {
 
     private String noteName;

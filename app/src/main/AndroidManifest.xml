@@ -10,12 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNotes">
         <activity
-            android:name=".ui.drawer.NoteDrawerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.detail.NoteTextActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.NotesActivity"
             android:exported="true">
             <intent-filter>
