@@ -44,7 +44,6 @@ public class NoteTextFragment extends Fragment {
         if (getArguments() != null && getArguments().containsKey(ARG_NOTE)) {
             displayDetails(getArguments().getParcelable(ARG_NOTE));
         }
-
         getParentFragmentManager()
                 .setFragmentResultListener(KEY_RESULT, getViewLifecycleOwner(), new FragmentResultListener() {
                     @Override
