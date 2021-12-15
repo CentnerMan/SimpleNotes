@@ -1,6 +1,7 @@
 package ru.vlsv.simplenotes.ui;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,11 +9,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
@@ -64,10 +67,11 @@ public class NotesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, R.string.add_msg, Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.drawer_layout), R.string.add_msg, Snackbar.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_delete:
-                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+            case R.id.action_rename:
+                showAlertDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -124,5 +128,26 @@ public class NotesActivity extends AppCompatActivity {
                 .addToBackStack("")
                 .replace(R.id.fragment_container, new PreferencesFragment())
                 .commit();
+    }
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_add_24)
+                .setTitle(R.string.alert_title)
+                .setMessage(R.string.alert_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(NotesActivity.this, R.string.ok, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(NotesActivity.this, R.string.no, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 }

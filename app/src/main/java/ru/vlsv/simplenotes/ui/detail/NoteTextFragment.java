@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
 
@@ -74,7 +76,7 @@ public class NoteTextFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.delete_msg, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

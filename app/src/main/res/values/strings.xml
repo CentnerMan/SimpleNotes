@@ -20,10 +20,18 @@
     <string name="exit">Exit</string>
     <string name="about">About</string>
     <string name="drawer_header">Simple Notes</string>
-    <string name="navigation_drawer_open">open drawer</string>
-    <string name="navigation_drawer_close">close drawer</string>
+    <string name="navigation_drawer_open">Open drawer</string>
+    <string name="navigation_drawer_close">Close drawer</string>
     <string name="about_developers">About developers</string>
     <string name="preferences">Preferences</string>
+    <string name="delete_msg">Delete</string>
+    <string name="add_msg">Add</string>
+    <string name="action_rename">Rename</string>
+    <string name="rename_msg">Rename</string>
+    <string name="alert_title">Alert title</string>
+    <string name="alert_message">Alert message</string>
+    <string name="ok">OK</string>
+    <string name="no">No</string>
 
 
 </resources>
