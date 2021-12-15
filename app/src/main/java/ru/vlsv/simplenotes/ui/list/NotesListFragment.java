@@ -79,7 +79,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
                     getParentFragmentManager()
                             .beginTransaction()
                             .addToBackStack("")
-                            .replace(R.id.fragment_container, new NoteTextFragment(note))
+                            .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
                             .commit();
                 }
             });

@@ -25,11 +25,15 @@ public class NoteTextFragment extends Fragment {
     private TextView noteText;
     private Note theNote;
 
-    public NoteTextFragment() {
+    private NoteTextFragment() {
     }
 
-    public NoteTextFragment(Note note) {
-        theNote = note;
+    public static NoteTextFragment newInstance(Note note) {
+        NoteTextFragment fragment = new NoteTextFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_NOTE, note);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
