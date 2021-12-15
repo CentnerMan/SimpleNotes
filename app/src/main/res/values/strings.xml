@@ -32,6 +32,11 @@
     <string name="alert_message">Alert message</string>
     <string name="ok">OK</string>
     <string name="no">No</string>
+    <string name="channel_description">Channel description</string>
+    <string name="channel_name">Channel name</string>
+    <string name="content_title">Simple Notes</string>
+    <string name="content_text">This is notification</string>
+    <string name="notification">Notification</string>
 
 
 </resources>

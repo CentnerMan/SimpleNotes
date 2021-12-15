@@ -1,6 +1,7 @@
 package ru.vlsv.simplenotes.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,6 +30,8 @@ import ru.vlsv.simplenotes.ui.preferences.PreferencesFragment;
 public class NotesActivity extends AppCompatActivity {
 
     private static final String ARG_NOTE = "ARG_NOTE";
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+    private static final int NOTIFICATION_ID = 1;
 
     private Note selectedNote;
 
@@ -35,6 +41,14 @@ public class NotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initToolbarAndDrawer();
+
+        NotificationChannelCompat channelCompat =
+                new NotificationChannelCompat.Builder(CHANNEL_ID,
+                        NotificationManagerCompat.IMPORTANCE_DEFAULT)
+                        .setDescription(String.valueOf(R.string.channel_description))
+                        .setName(getString(R.string.channel_name))
+                        .build();
+        NotificationManagerCompat.from(this).createNotificationChannel(channelCompat);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(ARG_NOTE)) {
             selectedNote = savedInstanceState.getParcelable(ARG_NOTE);
@@ -101,12 +115,19 @@ public class NotesActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             switch (id) {
+
                 case R.id.action_drawer_about:
                     openAboutFragment();
                     return true;
+
                 case R.id.action_drawer_preferences:
                     openPreferencesFragment();
                     return true;
+
+                case R.id.action_notification:
+                    showNotification();
+                    return true;
+
                 case R.id.action_drawer_exit:
                     finish();
                     return true;
@@ -149,5 +170,18 @@ public class NotesActivity extends AppCompatActivity {
                 })
                 .setCancelable(false)
                 .show();
+    }
+
+    private void showNotification() {
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        Notification compat = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.content_title))
+                .setContentText(getString(R.string.content_text))
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .build();
+
+        notificationManager.notify(NOTIFICATION_ID, compat);
     }
 }
