@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +17,26 @@ import java.util.List;
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.InMemoryNotesRepository;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
 
     public static final String ARG_NOTE = "ARG_NOTE";
-    public static final String RESULT_KEY = "NotesListFragment_RESULT";
 
     private LinearLayout notesContainer;
 
     private NotesListPresenter presenter;
+
+//    public NotesListFragment() {
+//    }
+//
+//    public static NotesListFragment newInstance(Note note) {
+//        NotesListFragment fragment = new NotesListFragment();
+//        Bundle args = new Bundle();
+//        args.putParcelable(ARG_NOTE, note);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +74,13 @@ public class NotesListFragment extends Fragment implements NotesListView {
                     Bundle data = new Bundle();
                     data.putParcelable(ARG_NOTE, note);
 
-                    getParentFragmentManager()
-                            .setFragmentResult(RESULT_KEY, data);
+                    Toast.makeText(requireContext(), note.getNoteName(), Toast.LENGTH_SHORT).show();
 
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("")
+                            .replace(R.id.fragment_container, new NoteTextFragment(note))
+                            .commit();
                 }
             });
 

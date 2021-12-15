@@ -1,18 +1,21 @@
 package ru.vlsv.simplenotes.ui.detail;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-
-import android.view.View;
-import android.widget.TextView;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
-import ru.vlsv.simplenotes.ui.list.NotesListFragment;
 
 public class NoteTextFragment extends Fragment {
 
@@ -20,17 +23,25 @@ public class NoteTextFragment extends Fragment {
     public static final String KEY_RESULT = "NoteTextFragment_KEY_RESULT";
     private TextView noteName;
     private TextView noteText;
+    private Note theNote;
 
     public NoteTextFragment() {
-        super(R.layout.fragment_note_text);
     }
 
-    public static NoteTextFragment newInstance(Note note) {
-        NoteTextFragment fragment = new NoteTextFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_NOTE, note);
-        fragment.setArguments(args);
-        return fragment;
+    public NoteTextFragment(Note note) {
+        theNote = note;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_note_text, container, false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -43,16 +54,26 @@ public class NoteTextFragment extends Fragment {
 
         if (getArguments() != null && getArguments().containsKey(ARG_NOTE)) {
             displayDetails(getArguments().getParcelable(ARG_NOTE));
+        } else {
+            displayDetails(theNote);
         }
-        getParentFragmentManager()
-                .setFragmentResultListener(KEY_RESULT, getViewLifecycleOwner(), new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        Note note = result.getParcelable(NotesListFragment.ARG_NOTE);
 
-                        displayDetails(note);
-                    }
-                });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_text_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void displayDetails(Note note) {
