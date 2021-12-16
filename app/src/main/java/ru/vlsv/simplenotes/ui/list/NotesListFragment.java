@@ -5,18 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import ru.vlsv.simplenotes.R;
-import ru.vlsv.simplenotes.entities.InMemoryNotesRepository;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
 import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
@@ -26,6 +28,10 @@ public class NotesListFragment extends Fragment implements NotesListView {
     private LinearLayout notesContainer;
 
     private NotesListPresenter presenter;
+
+    private ProgressBar progressBar;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
 
     public NotesListFragment() {
     }
@@ -42,7 +48,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new NotesListPresenter(this, new InMemoryNotesRepository());
+        presenter = new NotesListPresenter(this, InMemoryNotesRepository.INSTANCE);
     }
 
     @Nullable
@@ -57,7 +63,9 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
         notesContainer = view.findViewById(R.id.notes_container);
 
-        presenter.refresh();
+        presenter.requestNotes();
+
+        progressBar = view.findViewById(R.id.progress);
     }
 
     @Override
@@ -74,7 +82,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
                     Bundle data = new Bundle();
                     data.putParcelable(ARG_NOTE, note);
 
-                    Toast.makeText(requireContext(), note.getNoteName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(requireContext(), note.getNoteName(), Toast.LENGTH_SHORT).show();
 
                     getParentFragmentManager()
                             .beginTransaction()
@@ -84,11 +92,24 @@ public class NotesListFragment extends Fragment implements NotesListView {
                 }
             });
 
-            TextView cityTitle = itemView.findViewById(R.id.note_name);
-            cityTitle.setText(note.getNoteName());
+            TextView noteDate = itemView.findViewById(R.id.note_date);
+            noteDate.setText(dateFormat.format(note.getDate()));
+
+            TextView noteTitle = itemView.findViewById(R.id.note_name);
+            noteTitle.setText(note.getNoteName());
 
             notesContainer.addView(itemView);
         }
 
+    }
+
+    @Override
+    public void showProgress() {
+//        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+//        progressBar.setVisibility(View.GONE);
     }
 }

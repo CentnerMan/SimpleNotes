@@ -37,6 +37,7 @@
     <string name="content_title">Simple Notes</string>
     <string name="content_text">This is notification</string>
     <string name="notification">Notification</string>
+    <string name="notes">Notes</string>
 
 
 </resources>
