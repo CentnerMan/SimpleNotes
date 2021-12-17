@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.detail.NoteTextFragment">
 
-    <TextView
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/notes_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,13 +16,13 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         tools:text="Название" />
 
-    <TextView
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/notes_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="fill"
         android:layout_margin="@dimen/small_margin"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:src="Текст заметки" />
+        tools:text="Текст заметки" />
 
 </LinearLayout>

@@ -24,7 +24,6 @@ public class InMemoryNotesRepository implements NotesRepository {
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-
     private InMemoryNotesRepository() {
         notes.add(new Note(UUID.randomUUID().toString(), "Первая заметка", "Текст первой заметки"));
         notes.add(new Note(UUID.randomUUID().toString(), "Вторая заметка", "Текст второй заметки"));
@@ -46,17 +45,6 @@ public class InMemoryNotesRepository implements NotesRepository {
                 });
             }
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public List<Note> getAllNotes() {
-        ArrayList<Note> result = new ArrayList<>();
-
-        result.add(new Note("Первая заметка", "Текст первой заметки"));
-        result.add(new Note("Вторая заметка", "Текст второй заметки"));
-
-        return result;
     }
 
     @Override

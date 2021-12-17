@@ -8,8 +8,6 @@ public interface NotesRepository {
 
     void getAll(Callback<List<Note>> callback);
 
-    List<Note> getAllNotes();
-
     void addNote(Note note);
 
     void removeNote(Note note);
