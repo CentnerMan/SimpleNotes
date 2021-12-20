@@ -1,6 +1,8 @@
 package ru.vlsv.simplenotes.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,11 +10,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
@@ -23,6 +30,8 @@ import ru.vlsv.simplenotes.ui.preferences.PreferencesFragment;
 public class NotesActivity extends AppCompatActivity {
 
     private static final String ARG_NOTE = "ARG_NOTE";
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+    private static final int NOTIFICATION_ID = 1;
 
     private Note selectedNote;
 
@@ -32,6 +41,14 @@ public class NotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initToolbarAndDrawer();
+
+        NotificationChannelCompat channelCompat =
+                new NotificationChannelCompat.Builder(CHANNEL_ID,
+                        NotificationManagerCompat.IMPORTANCE_DEFAULT)
+                        .setDescription(String.valueOf(R.string.channel_description))
+                        .setName(getString(R.string.channel_name))
+                        .build();
+        NotificationManagerCompat.from(this).createNotificationChannel(channelCompat);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(ARG_NOTE)) {
             selectedNote = savedInstanceState.getParcelable(ARG_NOTE);
@@ -64,10 +81,11 @@ public class NotesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, R.string.add_msg, Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.drawer_layout), R.string.add_msg, Snackbar.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_delete:
-                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+            case R.id.action_rename:
+                showAlertDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -97,12 +115,19 @@ public class NotesActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             switch (id) {
+
                 case R.id.action_drawer_about:
                     openAboutFragment();
                     return true;
+
                 case R.id.action_drawer_preferences:
                     openPreferencesFragment();
                     return true;
+
+                case R.id.action_notification:
+                    showNotification();
+                    return true;
+
                 case R.id.action_drawer_exit:
                     finish();
                     return true;
@@ -124,5 +149,39 @@ public class NotesActivity extends AppCompatActivity {
                 .addToBackStack("")
                 .replace(R.id.fragment_container, new PreferencesFragment())
                 .commit();
+    }
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_add_24)
+                .setTitle(R.string.alert_title)
+                .setMessage(R.string.alert_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(NotesActivity.this, R.string.ok, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(NotesActivity.this, R.string.no, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private void showNotification() {
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        Notification compat = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.content_title))
+                .setContentText(getString(R.string.content_text))
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .build();
+
+        notificationManager.notify(NOTIFICATION_ID, compat);
     }
 }

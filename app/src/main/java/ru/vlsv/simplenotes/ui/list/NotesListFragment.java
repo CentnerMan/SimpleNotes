@@ -27,16 +27,16 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     private NotesListPresenter presenter;
 
-//    public NotesListFragment() {
-//    }
-//
-//    public static NotesListFragment newInstance(Note note) {
-//        NotesListFragment fragment = new NotesListFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(ARG_NOTE, note);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    public NotesListFragment() {
+    }
+
+    public static NotesListFragment newInstance(Note note) {
+        NotesListFragment fragment = new NotesListFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_NOTE, note);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
                     getParentFragmentManager()
                             .beginTransaction()
                             .addToBackStack("")
-                            .replace(R.id.fragment_container, new NoteTextFragment(note))
+                            .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
                             .commit();
                 }
             });

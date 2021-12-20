@@ -1,10 +1,9 @@
 package ru.vlsv.simplenotes.entities;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.RequiresApi;
+import java.util.Date;
 
 public class Note implements Parcelable {
 
@@ -12,13 +11,12 @@ public class Note implements Parcelable {
 
     private String noteText;
 
-//    private LocalDateTime noteCreateDate;
+    private Date noteCreateDate;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public Note(String noteName, String noteText) {
         this.noteName = noteName;
         this.noteText = noteText;
-//        noteCreateDate = LocalDateTime.now();
+        noteCreateDate = new Date();
     }
 
     protected Note(Parcel in) {
@@ -54,9 +52,9 @@ public class Note implements Parcelable {
         this.noteText = noteText;
     }
 
-//    public LocalDateTime getNoteCreateDate() {
-//        return noteCreateDate;
-//    }
+    public Date getNoteCreateDate() {
+        return noteCreateDate;
+    }
 
     @Override
     public int describeContents() {
