@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,13 +25,15 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     public static final String ARG_NOTE = "ARG_NOTE";
 
-    private LinearLayout notesContainer;
+    private ProgressBar progressBar;
+
+    private RecyclerView notesList;
+
+    private NotesAdapter notesAdapter;
 
     private NotesListPresenter presenter;
 
-    private ProgressBar progressBar;
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
 
     public NotesListFragment() {
     }
@@ -49,6 +51,21 @@ public class NotesListFragment extends Fragment implements NotesListView {
         super.onCreate(savedInstanceState);
 
         presenter = new NotesListPresenter(this, InMemoryNotesRepository.INSTANCE);
+        notesAdapter = new NotesAdapter();
+
+        notesAdapter.setOnClick(new NotesAdapter.onClick() {
+            @Override
+            public void onClick(Note note) {
+                Bundle data = new Bundle();
+                data.putParcelable(ARG_NOTE, note);
+
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("")
+                        .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
+                        .commit();
+            }
+        });
     }
 
     @Nullable
@@ -61,46 +78,23 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        notesContainer = view.findViewById(R.id.notes_container);
+        notesList = view.findViewById(R.id.notes_list);
         progressBar = view.findViewById(R.id.progress);
 
+//        notesList.setLayoutManager(new LinearLayoutManager(requireContext(),
+//                LinearLayoutManager.VERTICAL, false));
+        notesList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+
+        notesList.setAdapter(notesAdapter);
+
         presenter.requestNotes();
-
-
     }
 
     @Override
     public void showNotes(List<Note> notes) {
+        notesAdapter.setData(notes);
 
-        for (Note note : notes) {
-
-            View itemView = LayoutInflater.from(requireContext()).inflate(R.layout.item_notes, notesContainer, false);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Bundle data = new Bundle();
-                    data.putParcelable(ARG_NOTE, note);
-
-//                    Toast.makeText(requireContext(), note.getNoteName(), Toast.LENGTH_SHORT).show();
-
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .addToBackStack("")
-                            .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
-                            .commit();
-                }
-            });
-
-            TextView noteDate = itemView.findViewById(R.id.note_date);
-            noteDate.setText(dateFormat.format(note.getDate()));
-
-            TextView noteTitle = itemView.findViewById(R.id.note_name);
-            noteTitle.setText(note.getNoteName());
-
-            notesContainer.addView(itemView);
-        }
+        notesAdapter.notifyDataSetChanged();
 
     }
 

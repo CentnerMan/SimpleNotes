@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?selectableItemBackground">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/teal_200"
-        android:layout_margin="@dimen/small_margin">
+        android:layout_margin="@dimen/small_margin"
+        app:cardBackgroundColor="@color/teal_200">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,6 +22,9 @@
                 android:id="@+id/note_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:textAlignment="textEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 tools:text="Дата" />
 
@@ -30,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/small_margin"
                 android:layout_marginVertical="@dimen/small_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 tools:text="Заметка" />
 
         </LinearLayout>
