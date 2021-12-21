@@ -10,8 +10,8 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_margin"
-        app:cardBackgroundColor="@color/teal_200">
+        android:layout_margin="@dimen/smallest_margin"
+        app:cardBackgroundColor="@color/orange">
 
         <LinearLayout
             android:layout_width="match_parent"

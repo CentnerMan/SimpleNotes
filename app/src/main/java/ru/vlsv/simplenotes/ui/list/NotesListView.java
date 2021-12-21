@@ -11,4 +11,8 @@ public interface NotesListView {
     void showProgress();
 
     void hideProgress();
+
+    void showEmpty();
+
+    void hideEmpty();
 }

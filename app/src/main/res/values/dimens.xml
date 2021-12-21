@@ -13,4 +13,6 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="drawer_height">200dp</dimen>
     <dimen name="text_size">20sp</dimen>
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="smallest_margin">5dp</dimen>
 </resources>

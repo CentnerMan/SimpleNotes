@@ -21,16 +21,17 @@ public class NotesListPresenter {
 
         view.showProgress();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         repository.getAll(new Callback<List<Note>>() {
             @Override
             public void onSuccess(List<Note> result) {
                 view.showNotes(result);
+
+                if (result.isEmpty()) {
+                    view.showEmpty();
+                } else {
+                    view.hideEmpty();
+                }
+
                 view.hideProgress();
             }
 
@@ -43,9 +44,4 @@ public class NotesListPresenter {
 
     }
 
-//    public void refresh() {
-//
-//        List<Note> result = repository.getAllNotes();
-//        view.showNotes(result);
-//    }
 }

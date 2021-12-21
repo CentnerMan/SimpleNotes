@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,7 +26,9 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     public static final String ARG_NOTE = "ARG_NOTE";
 
-    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private TextView emptyList;
 
     private RecyclerView notesList;
 
@@ -79,13 +82,33 @@ public class NotesListFragment extends Fragment implements NotesListView {
         super.onViewCreated(view, savedInstanceState);
 
         notesList = view.findViewById(R.id.notes_list);
-        progressBar = view.findViewById(R.id.progress);
+        emptyList = view.findViewById(R.id.empty);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_to_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.requestNotes();
+            }
+        });
 
 //        notesList.setLayoutManager(new LinearLayoutManager(requireContext(),
 //                LinearLayoutManager.VERTICAL, false));
         notesList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
         notesList.setAdapter(notesAdapter);
+
+//        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
+//                DividerItemDecoration.VERTICAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_divider_horizontal));
+//
+//        notesList.addItemDecoration(itemDecoration);
+
+//        DividerItemDecoration itemDecorationTwo = new DividerItemDecoration(requireContext(),
+//                DividerItemDecoration.HORIZONTAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),
+//                R.drawable.bg_divider_vertical));
+//
+//        notesList.addItemDecoration(itemDecorationTwo);
 
         presenter.requestNotes();
     }
@@ -100,11 +123,21 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showEmpty() {
+        emptyList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmpty() {
+        emptyList.setVisibility(View.GONE);
     }
 }

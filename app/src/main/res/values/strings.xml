@@ -38,6 +38,7 @@
     <string name="content_text">This is notification</string>
     <string name="notification">Notification</string>
     <string name="notes">Notes</string>
+    <string name="empty">Список заметок пуст</string>
 
 
 </resources>
