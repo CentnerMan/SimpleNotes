@@ -62,10 +62,11 @@ public class NotesListFragment extends Fragment implements NotesListView {
         super.onViewCreated(view, savedInstanceState);
 
         notesContainer = view.findViewById(R.id.notes_container);
+        progressBar = view.findViewById(R.id.progress);
 
         presenter.requestNotes();
 
-        progressBar = view.findViewById(R.id.progress);
+
     }
 
     @Override
@@ -105,11 +106,11 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     @Override
     public void showProgress() {
-//        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-//        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
     }
 }

@@ -21,6 +21,12 @@ public class NotesListPresenter {
 
         view.showProgress();
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         repository.getAll(new Callback<List<Note>>() {
             @Override
             public void onSuccess(List<Note> result) {

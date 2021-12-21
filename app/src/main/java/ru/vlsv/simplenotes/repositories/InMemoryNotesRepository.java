@@ -29,6 +29,10 @@ public class InMemoryNotesRepository implements NotesRepository {
         notes.add(new Note(UUID.randomUUID().toString(), "Вторая заметка", "Текст второй заметки"));
         notes.add(new Note(UUID.randomUUID().toString(), "Третья заметка", "Текст третьей заметки"));
         notes.add(new Note(UUID.randomUUID().toString(), "Четвертая заметка", "Текст четвертой заметки"));
+        notes.add(new Note(UUID.randomUUID().toString(), "Пятая заметка", "Текст пятой заметки"));
+        notes.add(new Note(UUID.randomUUID().toString(), "Шестая заметка", "Текст шестой заметки"));
+        notes.add(new Note(UUID.randomUUID().toString(), "Седьмая заметка", "Текст седьмой заметки"));
+        notes.add(new Note(UUID.randomUUID().toString(), "Восьмая заметка", "Текст восьмой заметки"));
     }
 
     @Override
