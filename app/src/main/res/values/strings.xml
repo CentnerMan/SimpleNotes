@@ -40,8 +40,8 @@
     <string name="notes">Notes</string>
     <string name="empty">Список заметок пуст</string>
     <string name="btn_save">Save</string>
-    <string name="hint_text">Text</string>
-    <string name="hint_title">Title</string>
+    <string name="hint_note_text">Text</string>
+    <string name="hint_note_name">Title</string>
 
 
 </resources>

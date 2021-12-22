@@ -52,12 +52,19 @@ public class InMemoryNotesRepository implements NotesRepository {
     }
 
     @Override
-    public void addNote(Note note) {
+    public void save(String noteName, String noteText, Callback<Note> callback) {
 
     }
 
     @Override
-    public void removeNote(Note note) {
+    public void update(String noteId, String noteName, String noteText, Callback<Note> callback) {
 
     }
+
+    @Override
+    public void delete(Note note, Callback<Void> callback) {
+
+    }
+
+
 }
