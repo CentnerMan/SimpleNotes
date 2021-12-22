@@ -39,6 +39,9 @@
     <string name="notification">Notification</string>
     <string name="notes">Notes</string>
     <string name="empty">Список заметок пуст</string>
+    <string name="btn_save">Save</string>
+    <string name="hint_text">Text</string>
+    <string name="hint_title">Title</string>
 
 
 </resources>

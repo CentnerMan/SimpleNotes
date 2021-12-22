@@ -20,6 +20,7 @@ import java.util.Locale;
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
 import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
+import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
 import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
@@ -96,6 +97,14 @@ public class NotesListFragment extends Fragment implements NotesListView {
         notesList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
         notesList.setAdapter(notesAdapter);
+
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddNoteBottomSheetDialogFragment.newInstance()
+                        .show(getParentFragmentManager(), AddNoteBottomSheetDialogFragment.TAG);
+            }
+        });
 
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
 //                DividerItemDecoration.VERTICAL);
