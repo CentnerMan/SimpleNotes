@@ -1,7 +1,6 @@
 package ru.vlsv.simplenotes.ui.add;
 
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

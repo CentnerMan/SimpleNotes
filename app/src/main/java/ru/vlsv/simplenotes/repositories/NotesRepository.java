@@ -12,5 +12,5 @@ public interface NotesRepository {
 
     void update(String noteId, String noteName, String noteText, Callback<Note> callback);
 
-    void delete(Note note, Callback<Void> callback);;
+    void delete(Note note, Callback<Void> callback);
 }
