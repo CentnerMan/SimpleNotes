@@ -15,4 +15,12 @@ public interface NotesListView {
     void showEmpty();
 
     void hideEmpty();
+
+    void showError(String error);
+
+    void onNoteAdded(Note note);
+
+    void onNoteRemoved(Note selectedNote);
+
+    void onNoteUpdated(Note note);
 }

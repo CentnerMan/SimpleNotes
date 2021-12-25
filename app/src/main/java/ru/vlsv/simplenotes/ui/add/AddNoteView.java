@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.StringRes;
 
+import ru.vlsv.simplenotes.entities.Note;
+
 public interface AddNoteView {
 
     void showProgress();
@@ -17,4 +19,5 @@ public interface AddNoteView {
     void setText(String noteText);
 
     void actionCompleted(String key, Bundle bundle);
+
 }

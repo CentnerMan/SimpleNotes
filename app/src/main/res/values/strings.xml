@@ -42,6 +42,9 @@
     <string name="btn_save">Save</string>
     <string name="hint_note_text">Text</string>
     <string name="hint_note_name">Title</string>
+    <string name="btn_update">Update</string>
+    <string name="action_update">Update</string>
+    <string name="retry">Retry</string>
 
 
 </resources>

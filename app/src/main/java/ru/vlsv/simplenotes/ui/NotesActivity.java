@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
 import ru.vlsv.simplenotes.ui.list.NotesListFragment;
 import ru.vlsv.simplenotes.ui.preferences.AboutFragment;
 import ru.vlsv.simplenotes.ui.preferences.PreferencesFragment;
@@ -82,11 +83,13 @@ public class NotesActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_add:
 //                Toast.makeText(this, R.string.add_msg, Toast.LENGTH_SHORT).show();
-                Snackbar.make(findViewById(R.id.drawer_layout), R.string.add_msg, Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(findViewById(R.id.drawer_layout), R.string.add_msg, Snackbar.LENGTH_SHORT).show();
+                AddNoteBottomSheetDialogFragment.addInstance()
+                        .show(getSupportFragmentManager(), AddNoteBottomSheetDialogFragment.TAG);
                 return true;
-            case R.id.action_rename:
-                showAlertDialog();
-                return true;
+//            case R.id.action_rename:
+//                showAlertDialog();
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

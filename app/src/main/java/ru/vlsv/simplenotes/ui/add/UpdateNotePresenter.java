@@ -21,7 +21,7 @@ public class UpdateNotePresenter implements NotePresenter {
         this.note = note;
 
 
-//        view.setActionButtonText(R.string.btn_update);
+        view.setActionButtonText(R.string.btn_update);
 
         view.setName(note.getNoteName());
         view.setText(note.getNoteText());
