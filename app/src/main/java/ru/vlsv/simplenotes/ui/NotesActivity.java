@@ -56,7 +56,7 @@ public class NotesActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("")
+//                .addToBackStack("")
                 .replace(R.id.fragment_container, new NotesListFragment())
                 .commit();
     }

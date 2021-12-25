@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground">
 
-    <TextView
-        android:id="@+id/note_name"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/small_margin"
-        android:layout_marginVertical="@dimen/small_margin"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        tools:text="Заметка" />
+        android:layout_margin="@dimen/smallest_margin"
+        app:cardBackgroundColor="@color/orange">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/note_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                tools:text="Дата" />
+
+            <TextView
+                android:id="@+id/note_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/small_margin"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                tools:text="Заметка" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

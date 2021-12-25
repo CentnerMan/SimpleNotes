@@ -4,28 +4,40 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import ru.vlsv.simplenotes.R;
-import ru.vlsv.simplenotes.entities.InMemoryNotesRepository;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
+import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
 import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
 
     public static final String ARG_NOTE = "ARG_NOTE";
 
-    private LinearLayout notesContainer;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private TextView emptyList;
+
+    private RecyclerView notesList;
+
+    private NotesAdapter notesAdapter;
 
     private NotesListPresenter presenter;
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
 
     public NotesListFragment() {
     }
@@ -42,7 +54,22 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new NotesListPresenter(this, new InMemoryNotesRepository());
+        presenter = new NotesListPresenter(this, InMemoryNotesRepository.INSTANCE);
+        notesAdapter = new NotesAdapter();
+
+        notesAdapter.setOnClick(new NotesAdapter.onClick() {
+            @Override
+            public void onClick(Note note) {
+                Bundle data = new Bundle();
+                data.putParcelable(ARG_NOTE, note);
+
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack("")
+                        .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
+                        .commit();
+            }
+        });
     }
 
     @Nullable
@@ -55,40 +82,71 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        notesContainer = view.findViewById(R.id.notes_container);
+        notesList = view.findViewById(R.id.notes_list);
+        emptyList = view.findViewById(R.id.empty);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_to_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.requestNotes();
+            }
+        });
 
-        presenter.refresh();
+//        notesList.setLayoutManager(new LinearLayoutManager(requireContext(),
+//                LinearLayoutManager.VERTICAL, false));
+        notesList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+
+        notesList.setAdapter(notesAdapter);
+
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddNoteBottomSheetDialogFragment.newInstance()
+                        .show(getParentFragmentManager(), AddNoteBottomSheetDialogFragment.TAG);
+            }
+        });
+
+//        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
+//                DividerItemDecoration.VERTICAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_divider_horizontal));
+//
+//        notesList.addItemDecoration(itemDecoration);
+
+//        DividerItemDecoration itemDecorationTwo = new DividerItemDecoration(requireContext(),
+//                DividerItemDecoration.HORIZONTAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),
+//                R.drawable.bg_divider_vertical));
+//
+//        notesList.addItemDecoration(itemDecorationTwo);
+
+        presenter.requestNotes();
     }
 
     @Override
     public void showNotes(List<Note> notes) {
+        notesAdapter.setData(notes);
 
-        for (Note note : notes) {
+        notesAdapter.notifyDataSetChanged();
 
-            View itemView = LayoutInflater.from(requireContext()).inflate(R.layout.item_notes, notesContainer, false);
+    }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    @Override
+    public void showProgress() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
 
-                    Bundle data = new Bundle();
-                    data.putParcelable(ARG_NOTE, note);
+    @Override
+    public void hideProgress() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
-                    Toast.makeText(requireContext(), note.getNoteName(), Toast.LENGTH_SHORT).show();
+    @Override
+    public void showEmpty() {
+        emptyList.setVisibility(View.VISIBLE);
+    }
 
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .addToBackStack("")
-                            .replace(R.id.fragment_container, NoteTextFragment.newInstance(note))
-                            .commit();
-                }
-            });
-
-            TextView cityTitle = itemView.findViewById(R.id.note_name);
-            cityTitle.setText(note.getNoteName());
-
-            notesContainer.addView(itemView);
-        }
-
+    @Override
+    public void hideEmpty() {
+        emptyList.setVisibility(View.GONE);
     }
 }

@@ -7,6 +7,8 @@ import java.util.Date;
 
 public class Note implements Parcelable {
 
+    private String id;
+
     private String noteName;
 
     private String noteText;
@@ -17,6 +19,13 @@ public class Note implements Parcelable {
         this.noteName = noteName;
         this.noteText = noteText;
         noteCreateDate = new Date();
+    }
+
+    public Note(String id, String noteName, String noteText) {
+        this.id = id;
+        this.noteName = noteName;
+        this.noteText = noteText;
+        this.noteCreateDate = new Date();
     }
 
     protected Note(Parcel in) {
@@ -52,8 +61,12 @@ public class Note implements Parcelable {
         this.noteText = noteText;
     }
 
-    public Date getNoteCreateDate() {
+    public Date getDate() {
         return noteCreateDate;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

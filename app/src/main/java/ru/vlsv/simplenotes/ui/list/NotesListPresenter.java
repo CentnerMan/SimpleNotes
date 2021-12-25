@@ -3,7 +3,8 @@ package ru.vlsv.simplenotes.ui.list;
 import java.util.List;
 
 import ru.vlsv.simplenotes.entities.Note;
-import ru.vlsv.simplenotes.entities.NotesRepository;
+import ru.vlsv.simplenotes.repositories.Callback;
+import ru.vlsv.simplenotes.repositories.NotesRepository;
 
 public class NotesListPresenter {
 
@@ -16,10 +17,31 @@ public class NotesListPresenter {
         this.repository = repository;
     }
 
-    public void refresh() {
+    public void requestNotes() {
 
-        List<Note> result = repository.getAllNotes();
+        view.showProgress();
 
-        view.showNotes(result);
+        repository.getAll(new Callback<List<Note>>() {
+            @Override
+            public void onSuccess(List<Note> result) {
+                view.showNotes(result);
+
+                if (result.isEmpty()) {
+                    view.showEmpty();
+                } else {
+                    view.hideEmpty();
+                }
+
+                view.hideProgress();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                view.hideProgress();
+                // Show error
+            }
+        });
+
     }
+
 }
