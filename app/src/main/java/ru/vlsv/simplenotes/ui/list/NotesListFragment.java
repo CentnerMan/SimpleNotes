@@ -131,21 +131,6 @@ public class NotesListFragment extends Fragment implements NotesListView {
             }
         });
 
-//        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
-//                DividerItemDecoration.VERTICAL);
-//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_divider_horizontal));
-//
-//        notesList.addItemDecoration(itemDecoration);
-
-//        DividerItemDecoration itemDecorationTwo = new DividerItemDecoration(requireContext(),
-//                DividerItemDecoration.HORIZONTAL);
-//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),
-//                R.drawable.bg_divider_vertical));
-//
-//        notesList.addItemDecoration(itemDecorationTwo);
-
-
-
         presenter.requestNotes();
 
         getParentFragmentManager()
