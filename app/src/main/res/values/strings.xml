@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Simple Notes</string>
 
+    <string name="app_name">Simple Notes</string>
     <string name="notes_list">List Notes</string>
-    <string name="notes_name">Notes name</string>
-    <string name="notes_text">Super-Puper text</string>
+    <string name="notes_name">Заголовок</string>
+    <string name="notes_text">Текст заметки</string>
     <string name="content_descr_float_add">Add</string>
     <string name="first_note_name">Первая заметка</string>
     <string name="first_note_text">Текст первой заметки</string>
@@ -16,17 +16,18 @@
     <string name="preferences_cancel_btn">Отменить изменения</string>
     <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
+    <string name="action_update">Update</string>
+    <string name="action_rename">Rename</string>
     <string name="action_settings">Settings</string>
     <string name="exit">Exit</string>
     <string name="about">About</string>
     <string name="drawer_header">Simple Notes</string>
     <string name="navigation_drawer_open">Open drawer</string>
     <string name="navigation_drawer_close">Close drawer</string>
-    <string name="about_developers">About developers</string>
+    <string name="about_developers">Простые заметки</string>
     <string name="preferences">Preferences</string>
     <string name="delete_msg">Delete</string>
     <string name="add_msg">Add</string>
-    <string name="action_rename">Rename</string>
     <string name="rename_msg">Rename</string>
     <string name="alert_title">Alert title</string>
     <string name="alert_message">Alert message</string>
@@ -42,9 +43,6 @@
     <string name="btn_save">Save</string>
     <string name="hint_note_text">Text</string>
     <string name="hint_note_name">Title</string>
-    <string name="btn_update">Update</string>
-    <string name="action_update">Update</string>
     <string name="retry">Retry</string>
-
 
 </resources>

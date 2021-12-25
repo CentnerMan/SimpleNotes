@@ -63,7 +63,6 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
             }
         });
 
-
         if (getArguments() == null) {
             presenter = new AddNotePresenter(this, InMemoryNotesRepository.INSTANCE);
         } else {

@@ -1,5 +1,6 @@
 package ru.vlsv.simplenotes.ui.list;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -27,6 +30,8 @@ import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
 import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
 import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
+import ru.vlsv.simplenotes.ui.add.AddNotePresenter;
+import ru.vlsv.simplenotes.ui.add.UpdateNotePresenter;
 import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
@@ -101,6 +106,9 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
         root = view.findViewById(R.id.coordinator);
 
+        notesList = view.findViewById(R.id.notes_list);
+        emptyList = view.findViewById(R.id.empty);
+
         swipeRefreshLayout = view.findViewById(R.id.swipe_to_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -108,9 +116,6 @@ public class NotesListFragment extends Fragment implements NotesListView {
                 presenter.requestNotes();
             }
         });
-
-        notesList = view.findViewById(R.id.notes_list);
-        emptyList = view.findViewById(R.id.empty);
 
 //        notesList.setLayoutManager(new LinearLayoutManager(requireContext(),
 //                LinearLayoutManager.VERTICAL, false));
@@ -139,15 +144,39 @@ public class NotesListFragment extends Fragment implements NotesListView {
 //
 //        notesList.addItemDecoration(itemDecorationTwo);
 
+
+
         presenter.requestNotes();
+
+        getParentFragmentManager()
+                .setFragmentResultListener(AddNotePresenter.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Note note = result.getParcelable(AddNotePresenter.ARG_NOTE);
+
+                        presenter.onNoteAdded(note);
+
+                    }
+                });
+
+        getParentFragmentManager()
+                .setFragmentResultListener(UpdateNotePresenter.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Note note = result.getParcelable(UpdateNotePresenter.ARG_NOTE);
+
+                        presenter.onNoteUpdate(note);
+                    }
+                });
+
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void showNotes(List<Note> notes) {
         notesAdapter.setData(notes);
 
         notesAdapter.notifyDataSetChanged();
-
     }
 
     @Override
