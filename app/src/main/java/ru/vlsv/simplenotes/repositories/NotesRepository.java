@@ -8,7 +8,9 @@ public interface NotesRepository {
 
     void getAll(Callback<List<Note>> callback);
 
-    void addNote(Note note);
+    void save(String noteName, String noteText, Callback<Note> callback);
 
-    void removeNote(Note note);
+    void update(String noteId, String noteName, String noteText, Callback<Note> callback);
+
+    void delete(Note note, Callback<Void> callback);
 }
