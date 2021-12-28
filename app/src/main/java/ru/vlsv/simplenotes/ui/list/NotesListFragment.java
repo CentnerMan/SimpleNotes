@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -28,11 +28,12 @@ import java.util.Locale;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.repositories.FirestoreNotesRepository;
 import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
+import ru.vlsv.simplenotes.repositories.SharedPreferencesNotesRepository;
 import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
 import ru.vlsv.simplenotes.ui.add.AddNotePresenter;
 import ru.vlsv.simplenotes.ui.add.UpdateNotePresenter;
-import ru.vlsv.simplenotes.ui.detail.NoteTextFragment;
 
 public class NotesListFragment extends Fragment implements NotesListView {
 
@@ -69,7 +70,12 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new NotesListPresenter(this, InMemoryNotesRepository.INSTANCE);
+        presenter = new NotesListPresenter(this, FirestoreNotesRepository.INSTANCE);
+
+//        presenter = new NotesListPresenter(this, InMemoryNotesRepository.INSTANCE);
+
+//        presenter = new NotesListPresenter(this,
+//                SharedPreferencesNotesRepository.getInstance(requireContext()));
         notesAdapter = new NotesAdapter(this);
 
         notesAdapter.setOnClick(new NotesAdapter.onClick() {
@@ -131,20 +137,11 @@ public class NotesListFragment extends Fragment implements NotesListView {
             }
         });
 
-//        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
-//                DividerItemDecoration.VERTICAL);
-//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_divider_horizontal));
-//
-//        notesList.addItemDecoration(itemDecoration);
-
-//        DividerItemDecoration itemDecorationTwo = new DividerItemDecoration(requireContext(),
-//                DividerItemDecoration.HORIZONTAL);
-//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),
-//                R.drawable.bg_divider_vertical));
-//
-//        notesList.addItemDecoration(itemDecorationTwo);
-
-
+//        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+//        defaultItemAnimator.setAddDuration(2000L);
+//        defaultItemAnimator.setChangeDuration(2000L);
+//        defaultItemAnimator.setRemoveDuration(2000L);
+//        notesList.setItemAnimator(defaultItemAnimator);
 
         presenter.requestNotes();
 

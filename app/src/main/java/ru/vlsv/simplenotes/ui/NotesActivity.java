@@ -17,13 +17,16 @@ import androidx.core.app.NotificationChannelCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
 import ru.vlsv.simplenotes.ui.add.AddNoteBottomSheetDialogFragment;
+import ru.vlsv.simplenotes.ui.auth.AuthFragment;
 import ru.vlsv.simplenotes.ui.list.NotesListFragment;
 import ru.vlsv.simplenotes.ui.preferences.AboutFragment;
 import ru.vlsv.simplenotes.ui.preferences.PreferencesFragment;
@@ -51,14 +54,46 @@ public class NotesActivity extends AppCompatActivity {
                         .build();
         NotificationManagerCompat.from(this).createNotificationChannel(channelCompat);
 
+        if (savedInstanceState == null) {
+
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+            if (account == null) {
+                showAuth();
+            } else {
+                showNotesList();
+            }
+        }
+
         if (savedInstanceState != null && savedInstanceState.containsKey(ARG_NOTE)) {
             selectedNote = savedInstanceState.getParcelable(ARG_NOTE);
         }
 
+        getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                showNotesList();
+            }
+        });
+
+//        getSupportFragmentManager()
+//                .beginTransaction()
+////                .addToBackStack("")
+//                .replace(R.id.fragment_container, new NotesListFragment())
+//                .commit();
+    }
+
+    private void showNotesList() {
         getSupportFragmentManager()
                 .beginTransaction()
-//                .addToBackStack("")
                 .replace(R.id.fragment_container, new NotesListFragment())
+                .commit();
+    }
+
+    private void showAuth() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new AuthFragment())
                 .commit();
     }
 

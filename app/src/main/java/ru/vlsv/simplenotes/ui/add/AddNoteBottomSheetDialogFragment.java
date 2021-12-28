@@ -15,7 +15,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import ru.vlsv.simplenotes.R;
 import ru.vlsv.simplenotes.entities.Note;
+import ru.vlsv.simplenotes.repositories.FirestoreNotesRepository;
 import ru.vlsv.simplenotes.repositories.InMemoryNotesRepository;
+import ru.vlsv.simplenotes.repositories.SharedPreferencesNotesRepository;
 
 public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment implements AddNoteView {
 
@@ -64,10 +66,20 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
         });
 
         if (getArguments() == null) {
-            presenter = new AddNotePresenter(this, InMemoryNotesRepository.INSTANCE);
+            presenter = new AddNotePresenter(this, FirestoreNotesRepository.INSTANCE);
+
+//            presenter = new AddNotePresenter(this, InMemoryNotesRepository.INSTANCE);
+
+//            presenter = new AddNotePresenter(this,
+//                    SharedPreferencesNotesRepository.getInstance(requireContext()));
         } else {
             Note note = getArguments().getParcelable(ARG_NOTE);
-            presenter = new UpdateNotePresenter(this, InMemoryNotesRepository.INSTANCE, note);
+
+            presenter = new UpdateNotePresenter(this, FirestoreNotesRepository.INSTANCE, note);
+
+//            presenter = new UpdateNotePresenter(this, InMemoryNotesRepository.INSTANCE, note);
+
+//            presenter = new UpdateNotePresenter(this, SharedPreferencesNotesRepository.getInstance(requireContext()), note);
         }
     }
 

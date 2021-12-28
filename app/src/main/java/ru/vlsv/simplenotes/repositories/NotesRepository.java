@@ -10,7 +10,7 @@ public interface NotesRepository {
 
     void save(String noteName, String noteText, Callback<Note> callback);
 
-    void update(String noteId, String noteName, String noteText, Callback<Note> callback);
+    void update(Note note, String noteName, String noteText, Callback<Note> callback);
 
     void delete(Note note, Callback<Void> callback);
 }
